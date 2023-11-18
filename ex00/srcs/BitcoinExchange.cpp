@@ -97,6 +97,34 @@ bool isValidDate(std::string &date)
 	return true;
 }
 
+bool isValidNumber(double &number)
+{
+	if (number > 1000)
+	{
+		std::cout << "Error: too large a number." << std::endl;
+		return false;
+	}
+	else if (number < 0)
+	{
+		std::cout << "Error: not a positive number." << std::endl;
+		return false;
+	}
+	return true;
+}
+
+bool isValidFloat(const std::string &number)
+{
+	char *endptr;
+	strtod(number.c_str(), &endptr);
+
+	return (*endptr == '\0' || *endptr == '\n') && errno != ERANGE;
+}
+
+void printInput(std::map<std::string, double> &input)
+{
+	
+}
+
 bool BitcoinExchange::parseInput(std::ifstream &file, std::map<std::string, double> &input) 
 {
     std::string line;
@@ -106,6 +134,7 @@ bool BitcoinExchange::parseInput(std::ifstream &file, std::map<std::string, doub
     while (std::getline(file, line)) 
 	{
         std::string date;
+        std::string number;
         double value;
 
         // Find the position of the '|' character
@@ -121,17 +150,22 @@ bool BitcoinExchange::parseInput(std::ifstream &file, std::map<std::string, doub
 				// Find the position of the first number after the '|'
 				size_t valuePos = line.find_first_of("-0123456789", separatorPos);
 
-				if (valuePos != std::string::npos) {
-					// Extract numeric value from the line
-					std::istringstream valueStream(line.substr(valuePos));
-					if (!(valueStream >> value)) 
+				if (valuePos != std::string::npos)
+				{
+					std::string numericSubstring = line.substr(valuePos);
+					size_t lastNumericPos = numericSubstring.find_last_of("0123456789");
+
+                    // Extract the substring containing only numeric characters
+                    std::istringstream valueStream(numericSubstring.substr(0, lastNumericPos + 1));
+					if (!(valueStream >> value))
 					{
 						std::cout << "Error: Invalid value format in the line." << std::endl;
-						return false;
 					}
-
-					// Add the date and value to the map
-					input[date] = value;
+					else if (isValidNumber(value) && isValidFloat(line.substr(valuePos)))
+					{
+						// Add the date and value to the map
+						input[date] = value;
+					}
 				}
 				else
 					std::cout << "Error: No numeric value found in the line." << std::endl;
@@ -140,6 +174,7 @@ bool BitcoinExchange::parseInput(std::ifstream &file, std::map<std::string, doub
 		else 
             std::cout << "Error: No '|' separator found in the line." << std::endl;
     }
+	printInput(input);
     
     return true;
 }

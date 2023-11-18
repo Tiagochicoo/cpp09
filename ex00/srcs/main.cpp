@@ -35,22 +35,19 @@ int main(int argc, char **argv)
 				std::map<std::string, double> inputDatabase;
 				std::cout << "Loading input..." << std::endl;
 				if (bitcoinExchange.parseInput(inputFile, inputDatabase))
-				{
-					std::cout << "Input parsed Successfully!" << std::endl;
-					return 1;
-				}
+					return 0;
 			}
-		// 	else
-		// 	{
-		// 		std::cout << "Error: Unable to open input file." << std::endl;
-		// 		return 0;
-		// 	}
-		// }
-		// else
-		// {
-		// 	return 1;
-		// }
-
+			else
+			{
+				std::cout << "Error: Unable to open input file." << std::endl;
+				return 1;
+			}
+		}
+		else
+		{
+			std::cout << "Error: Unable to open database file." << std::endl;
+			return 1;
+		}
 	}
 	else
 	{
@@ -58,4 +55,4 @@ int main(int argc, char **argv)
 		return 1;
 	}
 	return 0;
-}}
+}

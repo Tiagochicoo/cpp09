@@ -19,6 +19,7 @@
 # include <sstream>
 # include <map>
 # include <string>
+#include <cstdlib>
 
 class BitcoinExchange
 {
@@ -39,7 +40,7 @@ class BitcoinExchange
 		static bool parseDatabase(std::ifstream &file, std::map<std::string, double> &database);
 		static bool parseInput(std::ifstream &file, std::map<std::string, double> &database);
 
-		
+
 };
 
 std::ostream &			operator<<( std::ostream & o, BitcoinExchange const & i );
