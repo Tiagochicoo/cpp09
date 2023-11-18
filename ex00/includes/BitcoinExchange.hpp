@@ -14,10 +14,19 @@
 # define BITCOINEXCHANGE_HPP
 
 # include <iostream>
+# include <iomanip>
+# include <fstream>
+# include <sstream>
+# include <map>
 # include <string>
 
 class BitcoinExchange
 {
+
+	private:
+
+		std::map<std::string, double> bitcoinDatabase;
+		std::map<std::string, double> inputDatabase;
 
 	public:
 
@@ -27,8 +36,10 @@ class BitcoinExchange
 
 		BitcoinExchange &		operator=( BitcoinExchange const & rhs );
 
-	private:
+		static bool parseDatabase(std::ifstream &file, std::map<std::string, double> &database);
+		static bool parseInput(std::ifstream &file, std::map<std::string, double> &database);
 
+		
 };
 
 std::ostream &			operator<<( std::ostream & o, BitcoinExchange const & i );
