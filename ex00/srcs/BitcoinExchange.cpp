@@ -70,6 +70,33 @@ bool BitcoinExchange::parseDatabase(std::ifstream &file, std::map<std::string, d
 	return true;
 }
 
+bool isValidDate(std::string &date)
+{
+	std::string year;
+	std::string month;
+	std::string day;
+	unsigned int y;
+	unsigned int m;
+	unsigned int d;
+
+	year = date.substr(0, 4);
+	month = date.substr(5, 2);
+	day = date.substr(8, 2);
+
+	std::istringstream iss_year(year);
+	iss_year >> y;
+	std::istringstream iss_month(month);
+	iss_month >> m;
+	std::istringstream iss_day(day);
+	iss_day >> d;
+	if (y < 2009)
+		std::cout << "Error: BTC didn't exist as a currency that year (" << y << ")!" << std::endl;
+	if (m == 0 || m > 12 || d == 0 || d > 31 || (m == 2 && d > 29))
+		std::cout << "Error: bad input => " << date << std::endl;
+
+	return true;
+}
+
 bool BitcoinExchange::parseInput(std::ifstream &file, std::map<std::string, double> &input) 
 {
     std::string line;
@@ -89,23 +116,26 @@ bool BitcoinExchange::parseInput(std::ifstream &file, std::map<std::string, doub
             // Extract date from the line
             date = line.substr(0, separatorPos);
 
-            // Find the position of the first number after the '|'
-            size_t valuePos = line.find_first_of("-0123456789", separatorPos);
+			if (isValidDate(date))
+			{
+				// Find the position of the first number after the '|'
+				size_t valuePos = line.find_first_of("-0123456789", separatorPos);
 
-            if (valuePos != std::string::npos) {
-                // Extract numeric value from the line
-                std::istringstream valueStream(line.substr(valuePos));
-                if (!(valueStream >> value)) 
-				{
-                    std::cout << "Error: Invalid value format in the line." << std::endl;
-                    return false;
-                }
+				if (valuePos != std::string::npos) {
+					// Extract numeric value from the line
+					std::istringstream valueStream(line.substr(valuePos));
+					if (!(valueStream >> value)) 
+					{
+						std::cout << "Error: Invalid value format in the line." << std::endl;
+						return false;
+					}
 
-                // Add the date and value to the map
-                input[date] = value;
-            }
-			else
-				std::cout << "Error: No numeric value found in the line." << std::endl;
+					// Add the date and value to the map
+					input[date] = value;
+				}
+				else
+					std::cout << "Error: No numeric value found in the line." << std::endl;
+			}
         } 
 		else 
             std::cout << "Error: No '|' separator found in the line." << std::endl;
