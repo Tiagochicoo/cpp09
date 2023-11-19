@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "BitcoinExchange.hpp"
+#include <limits>
 
 /*
 ** ------------------------------- CONSTRUCTOR --------------------------------
@@ -18,6 +19,14 @@
 
 BitcoinExchange::BitcoinExchange()
 {
+	std::ifstream btcCSV("data.csv");
+	if (btcCSV.is_open())
+	{
+		if (parseDatabase(btcCSV, _bitcoinDatabase))
+		{
+			std::cout << "Database parsed Successfully!" << std::endl;
+		}
+	}
 }
 
 BitcoinExchange::BitcoinExchange( const BitcoinExchange & src )
@@ -65,7 +74,7 @@ bool BitcoinExchange::parseDatabase(std::ifstream &file, std::map<std::string, d
 			std::cout << "Error: Invalid format in bitcoin database file." << std::endl;
 			return false;
 		}
-		database[date] = value;		
+		database.insert(std::pair<std::string, double>(date, value));
 	}
 	return true;
 }
@@ -90,10 +99,15 @@ bool isValidDate(std::string &date)
 	std::istringstream iss_day(day);
 	iss_day >> d;
 	if (y < 2009)
+	{
 		std::cout << "Error: BTC didn't exist as a currency that year (" << y << ")!" << std::endl;
+		return false;
+	}
 	if (m == 0 || m > 12 || d == 0 || d > 31 || (m == 2 && d > 29))
+	{
 		std::cout << "Error: bad input => " << date << std::endl;
-
+		return false;
+	}
 	return true;
 }
 
@@ -120,62 +134,90 @@ bool isValidFloat(const std::string &number)
 	return (*endptr == '\0' || *endptr == '\n') && errno != ERANGE;
 }
 
-void printInput(std::map<std::string, double> &input)
+void BitcoinExchange::printOutput(std::map<std::string, double>& line)
 {
-	
+	// const_reverse_iterator because I don't need to change the iterator
+    std::map<std::string, double>::const_reverse_iterator it = line.rbegin();
+
+    if (it != line.rend())
+    {
+        const std::string &inputDate = it->first;
+        double inputAmount = it->second;
+
+        // Find the closest date in _bitcoinDatabase
+        std::map<std::string, double>::const_iterator closestBitcoinIt = _bitcoinDatabase.lower_bound(inputDate);
+
+        // If lower_bound returns the beginning of the map, use the first element
+        if (closestBitcoinIt == _bitcoinDatabase.begin())
+            closestBitcoinIt = _bitcoinDatabase.begin();
+        // If lower_bound returns the end of the map, use the last element
+        else if (closestBitcoinIt == _bitcoinDatabase.end())
+            --closestBitcoinIt;
+        // If not exactly equal, move to the previous element
+        else if (closestBitcoinIt->first != inputDate)
+            --closestBitcoinIt;
+
+        double bitcoinRate = closestBitcoinIt->second;
+
+		double calculatedAmount = inputAmount * bitcoinRate;
+        // Check for potential overflow before calculating the result
+		if ((std::numeric_limits<double>::max() > calculatedAmount))
+		{
+			std::cout << "Error: Overflow detected. Unable to calculate result." << std::endl;
+		}
+		else
+		{
+			std::cout << inputDate << " => " << inputAmount << " => " << bitcoinRate << " => " << calculatedAmount << std::endl;
+		}
+	}
 }
 
 bool BitcoinExchange::parseInput(std::ifstream &file, std::map<std::string, double> &input) 
 {
     std::string line;
 
-	// Skip first line
-	std::getline(file, line);
+    // Skip first line
+    std::getline(file, line);
     while (std::getline(file, line)) 
-	{
+    {
         std::string date;
-        std::string number;
         double value;
 
         // Find the position of the '|' character
         size_t separatorPos = line.find('|');
 
         if (separatorPos != std::string::npos)
-		{
+        {
             // Extract date from the line
             date = line.substr(0, separatorPos);
 
-			if (isValidDate(date))
-			{
-				// Find the position of the first number after the '|'
-				size_t valuePos = line.find_first_of("-0123456789", separatorPos);
+            if (isValidDate(date))
+            {
+                // Find the position of the first number after the '|'
+                size_t valuePos = line.find_first_of("-0123456789", separatorPos);
 
-				if (valuePos != std::string::npos)
-				{
-					std::string numericSubstring = line.substr(valuePos);
-					size_t lastNumericPos = numericSubstring.find_last_of("0123456789");
-
-                    // Extract the substring containing only numeric characters
-                    std::istringstream valueStream(numericSubstring.substr(0, lastNumericPos + 1));
-					if (!(valueStream >> value))
-					{
-						std::cout << "Error: Invalid value format in the line." << std::endl;
-					}
-					else if (isValidNumber(value) && isValidFloat(line.substr(valuePos)))
-					{
-						// Add the date and value to the map
-						input[date] = value;
-					}
-				}
-				else
-					std::cout << "Error: No numeric value found in the line." << std::endl;
-			}
+                if (valuePos != std::string::npos)
+                {
+                    // Extract numeric value from the line
+                    std::istringstream valueStream(line.substr(valuePos));
+                    if (!(valueStream >> value))
+                    {
+                        std::cout << "Error: Invalid value format in the line." << std::endl;
+                    }
+                    else if (isValidNumber(value) && isValidFloat(line.substr(valuePos)))
+                    {
+                        // Add the date and value to the map
+                        input[date] = value;
+                        this->printOutput(input);
+                    }
+                }
+                else
+                    std::cout << "Error: No numeric value found in the line." << std::endl;
+            }
         } 
-		else 
+        else 
             std::cout << "Error: No '|' separator found in the line." << std::endl;
     }
-	printInput(input);
-    
     return true;
 }
 

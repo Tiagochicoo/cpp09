@@ -26,7 +26,7 @@ class BitcoinExchange
 
 	private:
 
-		std::map<std::string, double> bitcoinDatabase;
+		std::map<std::string, double> _bitcoinDatabase;
 		std::map<std::string, double> inputDatabase;
 
 	public:
@@ -38,7 +38,8 @@ class BitcoinExchange
 		BitcoinExchange &		operator=( BitcoinExchange const & rhs );
 
 		static bool parseDatabase(std::ifstream &file, std::map<std::string, double> &database);
-		static bool parseInput(std::ifstream &file, std::map<std::string, double> &database);
+		bool parseInput(std::ifstream &file, std::map<std::string, double> &database);
+		void printOutput(std::map<std::string, double> &line);
 
 
 };
