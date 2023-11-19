@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 18:25:14 by tpereira          #+#    #+#             */
-/*   Updated: 2023/11/19 19:43:08 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/11/19 22:11:10 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,29 +84,25 @@ void PmergeMe::displayNumbers(std::string &when) const
 
 void PmergeMe::measureTime()
 {
-	// Measure time for std::vector
-    clock_t vectorStart = clock();
-    std::sort(_vector.begin(), _vector.end());
-    clock_t vectorEnd = clock();
-    double vectorTime = static_cast<double>(vectorEnd - vectorStart) / CLOCKS_PER_SEC * 1e6;
+        clock_t start, end;
 
-    // Copy list for sorting since sort is a non-const member function
-    std::list<int> tempList = _list;
+        // Measure time for std::vector
+        start = clock();
+        fordJohnson(_vector);
+        end = clock();
 
-    // Measure time for std::list
-    clock_t listStart = clock();
-    tempList.sort();
-    clock_t listEnd = clock();
-    double listTime = static_cast<double>(listEnd - listStart) / CLOCKS_PER_SEC * 1e6;
+        // Measure time for std::list
+        start = clock();
+        fordJohnson(_list);
+        end = clock();
 
-	// Display numbers after sorting them
-	std::string after = "After: ";
-	displayNumbers(after);
-
-    // Display time measurements
-    std::cout << "Time to process a range of " << _vector.size() << " elements with std::vector: " << vectorTime << " us" << std::endl;
-    std::cout << "Time to process a range of " << _list.size() << " elements with std::list: " << listTime << " us" << std::endl;
-}
+		// Display numbers after sorting them
+		std::string after = "After: ";
+		displayNumbers(after);
+		
+        std::cout << "Time to process with std::vector: " << double(end - start) / CLOCKS_PER_SEC << " seconds" << std::endl;
+        std::cout << "Time to process with std::list: " << double(end - start) / CLOCKS_PER_SEC << " seconds" << std::endl;
+    }
 
 
 /*

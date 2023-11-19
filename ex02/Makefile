@@ -3,6 +3,8 @@ CXX			= g++
 CXXFLAGS	= -Wall -Wextra -Werror -std=c++98 -pedantic -g -fsanitize=address
 SRCS		= ./srcs/*.cpp
 INC			= ./includes
+3000ARG		= $$(ruby -e 'puts (1..10000).to_a.shuffle.first(3000).join(" ")')
+10000ARG	= $$(ruby -e 'puts (1..20000).to_a.shuffle.first(10000).join(" ")')
 
 all : $(PROG)
 
@@ -17,6 +19,14 @@ clean :
 	@printf "\e[31;5;200m ╔════════════════════════════════════╗\e[0m\n"
 	@printf "\e[31;5;200m░▒▓█         Clean complete         █▓▒░\e[0m\n"
 	@printf "\e[31;5;200m ╚════════════════════════════════════╝\e[0m\n"
+
+3000 :
+	@printf "\e[34m█▓▒░        10000 Numbers     ░▒▓█ \e[0m\n";
+	@./PmergeMe "$(3000ARG)"
+
+10000 :
+	@printf "\e[34m█▓▒░        10000 Numbers     ░▒▓█ \e[0m\n";
+	@./PmergeMe "$(10000ARG)"
 
 fclean : clean
 	@rm -rf $(PROG)

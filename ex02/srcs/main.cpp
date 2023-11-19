@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 16:49:12 by tpereira          #+#    #+#             */
-/*   Updated: 2023/11/19 19:42:13 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/11/19 22:48:13 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int main(int argc, char **argv)
 {
-	if (argc != 2)
+	if (argc < 2)
 	{
 		std::cerr << "Error" << std::endl;
 		return 1;
