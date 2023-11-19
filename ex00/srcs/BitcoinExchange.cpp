@@ -159,17 +159,15 @@ void BitcoinExchange::printOutput(std::map<std::string, double>& line)
 
         double bitcoinRate = closestBitcoinIt->second;
 
-		double calculatedAmount = inputAmount * bitcoinRate;
-        // Check for potential overflow before calculating the result
-		if ((std::numeric_limits<double>::max() > calculatedAmount))
-		{
-			std::cout << "Error: Overflow detected. Unable to calculate result." << std::endl;
+		// Perform the calculation with long double for higher precision
+		long double calculatedAmount = static_cast<long double>(inputAmount) * static_cast<long double>(bitcoinRate);
+
+		// Set the precision for output
+		std::cout << std::fixed << std::setprecision(2);
+
+		// Print the result
+		std::cout << inputDate << " => " << inputAmount << " => " << bitcoinRate << " => " << calculatedAmount << std::endl;
 		}
-		else
-		{
-			std::cout << inputDate << " => " << inputAmount << " => " << bitcoinRate << " => " << calculatedAmount << std::endl;
-		}
-	}
 }
 
 bool BitcoinExchange::parseInput(std::ifstream &file, std::map<std::string, double> &input) 
@@ -177,7 +175,8 @@ bool BitcoinExchange::parseInput(std::ifstream &file, std::map<std::string, doub
     std::string line;
 
     // Skip first line
-    std::getline(file, line);
+    if (!(std::getline(file, line)))
+		return false;
     while (std::getline(file, line)) 
     {
         std::string date;
