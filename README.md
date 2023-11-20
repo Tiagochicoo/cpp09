@@ -81,35 +81,23 @@ You are not coding in C anymore. Time to C++! Therefore:
 
 C++ - Module 09 STL
 
-- Note that unless explicitly stated otherwise, theusing namespace <ns_name>and
-    friendkeywords are forbidden. Otherwise, your grade will be -42.
+- Note that unless explicitly stated otherwise, the using namespace <ns_name> and friendkeywords are forbidden. Otherwise, your grade will be -42.
 - **You are allowed to use the STL in the Module 08 and 09 only.** That means:
-    no **Containers** (vector/list/map/and so forth) and no **Algorithms** (anything that
-    requires to include the<algorithm>header) until then. Otherwise, your grade will
+    no **Containers** (vector/list/map/and so forth) and no **Algorithms** (anything that requires to include the<algorithm>header) until then. Otherwise, your grade will
     be -42.
 
 ```
 A few design requirements
 ```
-- Memory leakage occurs in C++ too. When you allocate memory (by using thenew
-    keyword), you must avoid **memory leaks**.
-- From Module 02 to Module 09, your classes must be designed in the **Orthodox**
-    **Canonical Form, except when explicitely stated otherwise**.
-- Any function implementation put in a header file (except for function templates)
-    means 0 to the exercise.
-- You should be able to use each of your headers independently from others. Thus,
-    they must include all the dependencies they need. However, you must avoid the
-    problem of double inclusion by adding **include guards**. Otherwise, your grade will
-    be 0.
-
+- Memory leakage occurs in C++ too. When you allocate memory (by using the new keyword), you must avoid **memory leaks**.
+- From Module 02 to Module 09, your classes must be designed in the **Orthodox Canonical Form, except when explicitely stated otherwise**.
+- Any function implementation put in a header file (except for function templates) means 0 to the exercise.
+- You should be able to use each of your headers independently from others. Thus, they must include all the dependencies they need. However, you must avoid the problem of double inclusion by adding **include guards**. Otherwise, your grade will be 0.
 ```
 Read me
 ```
-- You can add some additional files if you need to (i.e., to split your code). As these
-    assignments are not verified by a program, feel free to do so as long as you turn in
-    the mandatory files.
-- Sometimes, the guidelines of an exercise look short but the examples can show
-    requirements that are not explicitly written in the instructions.
+- You can add some additional files if you need to (i.e., to split your code). As these assignments are not verified by a program, feel free to do so as long as you turn in the mandatory files.
+- Sometimes, the guidelines of an exercise look short but the examples can show requirements that are not explicitly written in the instructions.
 - Read each module completely before starting! Really, do it.
 - By Odin, by Thor! Use your brain!!!
 
@@ -118,10 +106,7 @@ You will have to implement a lot of classes. This can seem tedious,
 unless you’re able to script your favorite text editor.
 ```
 ```
-You are given a certain amount of freedom to complete the exercises.
-However, follow the mandatory rules and don’t be lazy. You would
-miss a lot of useful information! Do not hesitate to read about
-theoretical concepts.
+You are given a certain amount of freedom to complete the exercises. However, follow the mandatory rules and don’t be lazy. You would miss a lot of useful information! Do not hesitate to read about theoretical concepts.
 ```
 
 # Chapter III
@@ -134,15 +119,13 @@ It is mandatory to use the standard containers to perform each exercise in this 
 Once a container is used you cannot use it for the rest of the module.
 ```
 ```
-It is advisable to read the subject in its entirety before doing the
-exercises.
+It is advisable to read the subject in its entirety before doing the exercises.
 ```
 ```
 You must use at least one container for each exercise with the
 exception of exercise 02 which requires the use of two containers.
 ```
-You must submit aMakefilefor each program which will compile your source files
-to the required output with the flags-Wall,-Wextraand-Werror.
+You must submit aMakefilefor each program which will compile your source files to the required output with the flags-Wall,-Wextraand-Werror.
 
 ```
 You must use c++, and your Makefile must not relink.
@@ -166,12 +149,9 @@ Files to turn in :Makefile, main.cpp, BitcoinExchange.{cpp, hpp}
 ```
 Forbidden functions :None
 ```
-You have to create a program which outputs the value of a certain amount of bitcoin
-on a certain date.
-This program must use a database in csv format which will represent bitcoin price
-over time. This database is provided with this subject.
-The program will take as input a second database, storing the different prices/dates
-to evaluate.
+You have to create a program which outputs the value of a certain amount of bitcoin on a certain date.
+This program must use a database in csv format which will represent bitcoin price over time. This database is provided with this subject.
+The program will take as input a second database, storing the different prices/dates to evaluate.
 
 ```
 Your program must respect these rules:
@@ -184,8 +164,7 @@ Your program must respect these rules:
 
 ```
 You must use at least one container in your code to validate this
-exercise. You should handle possible errors with an appropriate
-error message.
+exercise. You should handle possible errors with an appropriate error message.
 ```
 
 C++ - Module 09 STL
@@ -210,13 +189,10 @@ $>
 ```
 Your program will use the value in your input file.
 ```
-Your program should display on the standard output the result of the value multiplied
-by the exchange rate according to the date indicated in your database.
+Your program should display on the standard output the result of the value multiplied by the exchange rate according to the date indicated in your database.
 
 ```
-If the date used in the input does not exist in your DB then you
-must use the closest date contained in your DB. Be careful to use the
-lower date and not the upper one.
+If the date used in the input does not exist in your DB then you must use the closest date contained in your DB. Be careful to use the lower date and not the upper one.
 ```
 ```
 The following is an example of the program’s use.
@@ -264,13 +240,11 @@ You must create a program with these constraints:
     than 10. The calculation itself but also the result do not take into account this rule.
 - Your program must process this expression and output the correct result on the
     standard output.
-- If an error occurs during the execution of the program an error message should be
-    displayed on the standard output.
+- If an error occurs during the execution of the program an error message should be displayed on the standard output.
 - Your program must be able to handle operations with these tokens: "+ - / *".
 
 ```
-You must use at least one container in your code to validate this
-exercise.
+You must use at least one container in your code to validate this exercise.
 ```
 
 C++ - Module 09 STL
@@ -291,9 +265,7 @@ Error
 $>
 ```
 ```
-Warning: The container(s) you used in the previous exercise are
-forbidden here. The container(s) you used to validate this exercise
-will not be usable for the rest of this module.
+Warning: The container(s) you used in the previous exercise are forbidden here. The container(s) you used to validate this exercise will not be usable for the rest of this module.
 ```
 
 # Chapter VI
@@ -314,45 +286,32 @@ You must create a program with these constraints:
 ```
 - The name of the program is PmergeMe.
 - Your program must be able to use a positive integer sequence as argument.
-- Your program must use the merge-insert sort algorithm to sort the positive integer
-    sequence.
+- Your program must use the merge-insert sort algorithm to sort the positive integer sequence.
 
 ```
 To clarify, yes, you need to use the Ford-Johnson algorithm.
 ```
-- If an error occurs during program execution, an error message should be displayed
-    on the standard output.
+- If an error occurs during program execution, an error message should be displayed on the standard output.
 
 ```
-You must use at least two different containers in your code to
-validate this exercise. Your program must be able to handle at
-least 3000 different integers.
+You must use at least two different containers in your code to validate this exercise. Your program must be able to handle at least 3000 different integers.
 ```
 
 C++ - Module 09 STL
 
 ```
-It is strongly advised to implement your algorithm for each container
-and thus to avoid using a generic function.
+It is strongly advised to implement your algorithm for each container and thus to avoid using a generic function.
 ```
-Here are some additional guidelines on the information you should display line by line
-on the standard output:
+Here are some additional guidelines on the information you should display line by line on the standard output:
 
-- On the first line you must display an explicit text followed by the unsorted positive
-    integer sequence.
-- On the second line you must display an explicit text followed by the sorted positive
-    integer sequence.
-- On the third line you must display an explicit text indicating the time used by
-    your algorithm by specifying the first container used to sort the positive integer
-    sequence.
+- On the first line you must display an explicit text followed by the unsorted positive integer sequence.
+- On the second line you must display an explicit text followed by the sorted positive integer sequence.
+- On the third line you must display an explicit text indicating the time used by your algorithm by specifying the first container used to sort the positive integer sequence.
 - On the last line you must display an explicit text indicating the time used by
-    your algorithm by specifying the second container used to sort the positive integer
-    sequence.
+    your algorithm by specifying the second container used to sort the positive integer sequence.
 
 ```
-The format for the display of the time used to carry out your sorting
-is free but the precision chosen must allow to clearly see the
-difference between the two containers used.
+The format for the display of the time used to carry out your sorting is free but the precision chosen must allow to clearly see the difference between the two containers used.
 ```
 ```
 Here is an example of a standard use:
@@ -375,28 +334,23 @@ $>
 ```
 ```
 The indication of the time is deliberately strange in this example.
-Of course you have to indicate the time used to perform all your
-operations, both the sorting part and the data management part.
+Of course you have to indicate the time used to perform all your operations, both the sorting part and the data management part.
 ```
 
 C++ - Module 09 STL
 
 ```
-Warning: The container(s) you used in the previous exercises are
-forbidden here.
+Warning: The container(s) you used in the previous exercises are forbidden here.
 ```
 ```
-The management of errors related to duplicates is left to your
-discretion.
+The management of errors related to duplicates is left to your discretion.
 ```
 
 # Chapter VII
 
 # Submission and peer-evaluation
 
-Turn in your assignment in your Gitrepository as usual. Only the work inside your
-repository will be evaluated during the defense. Don’t hesitate to double check the
-names of your folders and files to ensure they are correct.
+Turn in your assignment in your Gitrepository as usual. Only the work inside your repository will be evaluated during the defense. Don’t hesitate to double check the names of your folders and files to ensure they are correct.
 
 ```
 16D85ACC441674FBA2DF65190663F33F793984B142405F56715D5225FBAB6E3D6A4F

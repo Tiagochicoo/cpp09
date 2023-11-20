@@ -27,6 +27,7 @@ class RPN
 
 		bool isNumber(const std::string &token);
 		bool isOperator(const std::string &token);
+		bool isSpace(const std::string &token);
 		double applyOperator(double operand1, double operand2, const std::string &token);
 
 	public:

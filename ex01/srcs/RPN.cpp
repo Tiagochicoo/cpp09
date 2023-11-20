@@ -89,8 +89,6 @@ double RPN::evaluate(const std::string &expression)
 			stack.pop();
 			double operand1 = stack.top();
 			stack.pop();
-
-
 			double result = applyOperator(operand1, operand2, token);
 			stack.push(result);
 		}
@@ -124,6 +122,11 @@ bool RPN::isNumber(const std::string &token)
 bool RPN::isOperator(const std::string &token)
 {
     return token == "+" || token == "-" || token == "*" || token == "/";
+}
+
+bool RPN::isSpace(const std::string &token)
+{
+	return token == " ";
 }
 
 double RPN::applyOperator(double operand1, double operand2, const std::string &token)
