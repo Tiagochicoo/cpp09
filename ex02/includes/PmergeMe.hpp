@@ -33,30 +33,32 @@ class PmergeMe
 		template <typename Container>
 		void fordJohnson(Container &sequence)
 		{
-			// Separate positive and negative integers
+			// Separate integers in half
 			typename Container::iterator it;
-			std::vector<int> positive;
-			std::vector<int> negative;
+			std::vector<int> topHalf;
+			std::vector<int> bottomHalf;
+			int size = sequence.size();
 
-			for (it = sequence.begin(); it != sequence.end(); ++it) {
-				if (*it >= 0) {
-					positive.push_back(*it);
-				} else {
-					negative.push_back(-(*it));
-				}
+			for (it = sequence.begin(); it != sequence.end(); ++it) 
+			{
+				if (*it >= size) 
+					topHalf.push_back(*it);
+				else
+					bottomHalf.push_back(-(*it));
 			}
 
-			// Sort positive integers in ascending order
-			std::sort(positive.begin(), positive.end());
+			// Sort top half of integers in ascending order
+			std::sort(topHalf.begin(), topHalf.end());
 
-			// Sort negative integers in descending order
-			std::sort(negative.rbegin(), negative.rend());
+			// Sort bottom half of integers in descending order
+			std::sort(bottomHalf.rbegin(), bottomHalf.rend());
 
-			// Merge the sorted positive and negative integers
+			// Merge the sorted topHalf and bottomHalf integers
 			sequence.clear();
-			sequence.insert(sequence.end(), positive.begin(), positive.end());
+			sequence.insert(sequence.end(), topHalf.begin(), topHalf.end());
 
-			for (typename std::vector<int>::iterator it = negative.begin(); it != negative.end(); ++it) {
+			for (typename std::vector<int>::iterator it = bottomHalf.begin(); it != bottomHalf.end(); ++it) 
+			{
 				sequence.push_back(-(*it));
 			}
 		}
