@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 11:56:37 by tpereira          #+#    #+#             */
-/*   Updated: 2023/09/16 12:01:30 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/11/22 19:47:32 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,26 @@ BitcoinExchange::~BitcoinExchange()
 
 BitcoinExchange &				BitcoinExchange::operator=( BitcoinExchange const & rhs )
 {
-	(void)rhs;
-	//if ( this != &rhs )
-	//{
-		//this->_value = rhs.getValue();
-	//}
+	if ( this != &rhs )
+	{
+		_bitcoinDatabase = rhs.getBitcoinDatabase();
+		inputDatabase = rhs.getInputDatabase();
+	}
 	return *this;
 }
+
+std::ostream &			operator<<( std::ostream & o, BitcoinExchange const & i )
+{
+	(void)i;
+	//o << "Value = " << i.getValue();
+	return o;
+}
+
+
+/*
+** --------------------------------- METHODS ----------------------------------
+*/
+
 
 bool BitcoinExchange::parseDatabase(std::ifstream &file, std::map<std::string, double> &database)
 {
@@ -220,23 +233,18 @@ bool BitcoinExchange::parseInput(std::ifstream &file, std::map<std::string, doub
     return true;
 }
 
-
-std::ostream &			operator<<( std::ostream & o, BitcoinExchange const & i )
-{
-	(void)i;
-	//o << "Value = " << i.getValue();
-	return o;
-}
-
-
-/*
-** --------------------------------- METHODS ----------------------------------
-*/
-
-
 /*
 ** --------------------------------- ACCESSOR ---------------------------------
 */
 
+std::map<std::string, double> BitcoinExchange::getBitcoinDatabase() const
+{
+	return _bitcoinDatabase;
+}
+
+std::map<std::string, double> BitcoinExchange::getInputDatabase() const
+{
+	return inputDatabase;
+}
 
 /* ************************************************************************** */
