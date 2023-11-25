@@ -21,15 +21,15 @@ clean :
 	@printf "\e[31;5;200m░▒▓█         Clean complete         █▓▒░\e[0m\n"
 	@printf "\e[31;5;200m ╚════════════════════════════════════╝\e[0m\n"
 
-3000 :
+3000 : fclean all
 	@printf "\e[34m█▓▒░        3000 Numbers     ░▒▓█ \e[0m\n";
 	@./PmergeMe "$(3000ARG)"
 
-10000 :
+10000 : fclean all
 	@printf "\e[34m█▓▒░        10k Numbers     ░▒▓█ \e[0m\n";
 	@./PmergeMe "$(10000ARG)"
 
-100000 :
+100000 : fclean all
 	@printf "\e[34m█▓▒░        100k Numbers     ░▒▓█ \e[0m\n";
 	@./PmergeMe "$(10000ARG)"
 
