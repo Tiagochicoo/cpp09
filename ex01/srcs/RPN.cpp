@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 16:49:17 by tpereira          #+#    #+#             */
-/*   Updated: 2023/11/20 07:20:16 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/11/25 18:28:12 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,10 @@ RPN::RPN()
 {
 }
 
-RPN::RPN( const RPN & src )
+RPN::RPN(const RPN &src)
 {
 	(void)src;
 }
-
 
 /*
 ** -------------------------------- DESTRUCTOR --------------------------------
@@ -34,29 +33,26 @@ RPN::~RPN()
 {
 }
 
-
 /*
 ** --------------------------------- OVERLOAD ---------------------------------
 */
 
-RPN &				RPN::operator=( RPN const & rhs )
+RPN &RPN::operator=(RPN const &rhs)
 {
 	(void)rhs;
-	//if ( this != &rhs )
+	// if ( this != &rhs )
 	//{
-		//this->_value = rhs.getValue();
+	// this->_value = rhs.getValue();
 	//}
 	return *this;
 }
 
-
-std::ostream &			operator<<( std::ostream & o, RPN const & i )
+std::ostream &operator<<(std::ostream &o, RPN const &i)
 {
 	(void)i;
-	//o << "Value = " << i.getValue();
+	// o << "Value = " << i.getValue();
 	return o;
 }
-
 
 /*
 ** --------------------------------- METHODS ----------------------------------
@@ -75,8 +71,8 @@ double RPN::evaluate(const std::string &expression)
 		if (isNumber(token))
 		{
 			char *endptr;
-			if (strtod(token.c_str(), &endptr) > 10)
-				throw std::invalid_argument("Numbers used in operation are bigger than 10.");
+			if (strtod(token.c_str(), &endptr) > 9)
+				throw std::invalid_argument("Numbers used in operation can't be bigger than 10.");
 			else
 				stack.push(std::strtod(token.c_str(), &endptr));
 		}
@@ -100,38 +96,32 @@ double RPN::evaluate(const std::string &expression)
 	{
 		throw std::invalid_argument("Invalid Expression: too many operands.");
 	}
-
-    return stack.top();
+	return stack.top();
 }
 
 bool RPN::isNumber(const std::string &token)
 {
-    char *endptr;
-    strtod(token.c_str(), &endptr);
+	char *endptr;
+	// strtod converts the string to a double
+	strtod(token.c_str(), &endptr);
 
-    // Check for conversion error
-    if (*endptr != '\0' || errno == ERANGE)
-    {
-        errno = 0; // Reset errno
-        return false;
-    }
-
-    return true;
+	// Check for conversion error
+	if (*endptr != '\0' || errno == ERANGE)
+	{
+		errno = 0; // Reset errno
+		return false;
+	}
+	return true;
 }
 
 bool RPN::isOperator(const std::string &token)
 {
-    return token == "+" || token == "-" || token == "*" || token == "/";
-}
-
-bool RPN::isSpace(const std::string &token)
-{
-	return token == " ";
+	return token == "+" || token == "-" || token == "*" || token == "/";
 }
 
 double RPN::applyOperator(double operand1, double operand2, const std::string &token)
 {
-    if (token == "+")
+	if (token == "+")
 		return operand1 + operand2;
 	else if (token == "-")
 		return operand1 - operand2;
@@ -151,5 +141,9 @@ double RPN::applyOperator(double operand1, double operand2, const std::string &t
 ** --------------------------------- ACCESSOR ---------------------------------
 */
 
+std::stack<int> RPN::getNumbers() const
+{
+	return this->_numbers;
+}
 
 /* ************************************************************************** */
