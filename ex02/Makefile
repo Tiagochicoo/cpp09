@@ -21,7 +21,7 @@ clean :
 	@printf "\e[31;5;200m░▒▓█         Clean complete         █▓▒░\e[0m\n"
 	@printf "\e[31;5;200m ╚════════════════════════════════════╝\e[0m\n"
 
-3000 : fclean all
+3000 :
 	@printf "\e[34m█▓▒░        3000 Numbers     ░▒▓█ \e[0m\n";
 	@./PmergeMe "$(3000ARG)"
 
