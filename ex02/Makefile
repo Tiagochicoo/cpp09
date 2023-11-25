@@ -23,15 +23,18 @@ clean :
 
 3000 :
 	@printf "\e[34m█▓▒░        3000 Numbers     ░▒▓█ \e[0m\n";
-	@./PmergeMe "$(3000ARG)"
+	@$(CXX) $(CXXFLAGS) $(SRCS) -I$(INC) -o $(PROG)
+	@./PmergeMe $(3000ARG)
 
 10000 : fclean all
 	@printf "\e[34m█▓▒░        10k Numbers     ░▒▓█ \e[0m\n";
-	@./PmergeMe "$(10000ARG)"
+	@$(CXX) $(CXXFLAGS) $(SRCS) -I$(INC) -o $(PROG)
+	@./PmergeMe $(10000ARG)
 
 100000 : fclean all
 	@printf "\e[34m█▓▒░        100k Numbers     ░▒▓█ \e[0m\n";
-	@./PmergeMe "$(10000ARG)"
+	@$(CXX) $(CXXFLAGS) $(SRCS) -I$(INC) -o $(PROG)
+	@./PmergeMe $(10000ARG)
 
 fclean : clean
 	@rm -rf $(PROG)
