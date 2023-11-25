@@ -6,79 +6,96 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 18:25:11 by tpereira          #+#    #+#             */
-/*   Updated: 2023/11/20 07:21:53 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/11/25 18:27:19 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PMERGEME_HPP
-# define PMERGEME_HPP
+#define PMERGEME_HPP
 
-# include <iostream>
-# include <algorithm>
-# include <ctime>
-# include <cstdlib>
-# include <cstring>
-# include <vector>
-# include <list>
+#include <algorithm>
+#include <cstdlib>
+#include <cstring>
+#include <ctime>
+#include <deque>
+#include <iostream>
+#include <list>
+#include <vector>
 
 class PmergeMe
 {
-	private:
-		std::vector<int> _vector;
-		std::list<int>   _list;
-		
-		void vectorFordJohnson(std::vector<int> _vector);
-		void vectorFordJohnson(std::list<int> _list);
-		
-		template <typename Container>
-		void fordJohnson(Container &sequence)
+private:
+	std::vector<int> _vector;
+	std::list<int> _list;
+
+	// void vectorFordJohnson(std::vector<int> _vector);
+	// void vectorFordJohnson(std::list<int> _list);
+
+	template <typename Container>
+	void fordJohnson(Container &sequence)
+	{
+		// Separate integers in half
+		typename Container::iterator it;
+		Container topHalf;
+		Container bottomHalf;
+		int size = sequence.size();
+
+		for (it = sequence.begin(); it != sequence.end(); ++it)
 		{
-			// Separate integers in half
-			typename Container::iterator it;
-			std::vector<int> topHalf;
-			std::vector<int> bottomHalf;
-			int size = sequence.size();
-
-			for (it = sequence.begin(); it != sequence.end(); ++it) 
+			if (*it >= size)
 			{
-				if (*it >= size) 
-					topHalf.push_back(*it);
-				else
-					bottomHalf.push_back(-(*it));
+				topHalf.push_back(*it);
 			}
-
-			// Sort top half of integers in ascending order
-			std::sort(topHalf.begin(), topHalf.end());
-
-			// Sort bottom half of integers in descending order
-			std::sort(bottomHalf.rbegin(), bottomHalf.rend());
-
-			// Merge the sorted topHalf and bottomHalf integers
-			sequence.clear();
-			sequence.insert(sequence.end(), topHalf.begin(), topHalf.end());
-
-			for (typename std::vector<int>::iterator it = bottomHalf.begin(); it != bottomHalf.end(); ++it) 
+			else
 			{
-				sequence.push_back(-(*it));
+				bottomHalf.push_back(-(*it));
 			}
 		}
 
+		// Sort top half of integers in ascending order
+		if (std::is_same_v<Container, std::vector<int>>::value)
+		{
+			std::sort(topHalf.begin(), topHalf.end());
+		}
+		else if (std::is_same_v<Container, std::list<int>>::value)
+		{
+			topHalf.sort();
+		}
 
-	public:
+		// Sort bottom half of integers in descending order
+		if (std::is_same_v<Container, std::vector<int>>::value)
+		{
+			std::sort(bottomHalf.rbegin(), bottomHalf.rend());
+		}
+		else if (std::is_same_v<Container, std::list<int>>::value)
+		{
+			bottomHalf.sort(std::greater<>{});
+		}
 
-		PmergeMe();
-		PmergeMe(const char *numbers);
-		PmergeMe( PmergeMe const & src );
-		~PmergeMe();
+		// Merge the sorted topHalf and bottomHalf integers
+		sequence.clear();
+		sequence.insert(sequence.end(), topHalf.begin(), topHalf.end());
 
-		PmergeMe &		operator=( PmergeMe const & rhs );
+		for (typename Container::iterator it = bottomHalf.begin();
+			 it != bottomHalf.end(); ++it)
+		{
+			sequence.push_back(-(*it));
+		}
+	}
 
-		void displayNumbers(std::string &when) const;
-		void measureTime();
+public:
+	PmergeMe();
+	PmergeMe(const char *numbers);
+	PmergeMe(PmergeMe const &src);
+	~PmergeMe();
 
+	PmergeMe &operator=(PmergeMe const &rhs);
 
+	void displayNumbers(std::string &when) const;
+	void measureTime();
 };
 
-std::ostream &			operator<<( std::ostream & o, PmergeMe const & i );
+std::ostream &operator<<(std::ostream &o, PmergeMe const &i);
 
-#endif /* ******************************************************** PMERGEME_H */
+#endif /* ******************************************************** PMERGEME_H \
+		*/

@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 18:25:14 by tpereira          #+#    #+#             */
-/*   Updated: 2023/11/20 07:21:51 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/11/25 18:27:09 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 PmergeMe::PmergeMe(const char *numbers)
 {
-	char *token = std::strtok(const_cast<char*>(numbers), " ");
+	char *token = std::strtok(const_cast<char *>(numbers), " ");
 	while (token != NULL)
 	{
 		_vector.push_back(std::atoi(token));
@@ -31,11 +31,10 @@ PmergeMe::PmergeMe()
 {
 }
 
-PmergeMe::PmergeMe( const PmergeMe & src )
+PmergeMe::PmergeMe(const PmergeMe &src)
 {
 	(void)src;
 }
-
 
 /*
 ** -------------------------------- DESTRUCTOR --------------------------------
@@ -45,28 +44,26 @@ PmergeMe::~PmergeMe()
 {
 }
 
-
 /*
 ** --------------------------------- OVERLOAD ---------------------------------
 */
 
-PmergeMe &				PmergeMe::operator=( PmergeMe const & rhs )
+PmergeMe &PmergeMe::operator=(PmergeMe const &rhs)
 {
 	(void)rhs;
-	//if ( this != &rhs )
+	// if ( this != &rhs )
 	//{
-		//this->_value = rhs.getValue();
+	// this->_value = rhs.getValue();
 	//}
 	return *this;
 }
 
-std::ostream &			operator<<( std::ostream & o, PmergeMe const & i )
+std::ostream &operator<<(std::ostream &o, PmergeMe const &i)
 {
 	(void)i;
-	//o << "Value = " << i.getValue();
+	// o << "Value = " << i.getValue();
 	return o;
 }
-
 
 /*
 ** --------------------------------- METHODS ----------------------------------
@@ -75,39 +72,38 @@ std::ostream &			operator<<( std::ostream & o, PmergeMe const & i )
 void PmergeMe::displayNumbers(std::string &when) const
 {
 	std::cout << when;
-	for (std::vector<int>::const_iterator it = _vector.begin(); it != _vector.end(); ++it) 
+	for (std::vector<int>::const_iterator it = _vector.begin(); it != _vector.end(); ++it)
 	{
-        std::cout << *it << " ";
-    }
+		std::cout << *it << " ";
+	}
 	std::cout << std::endl;
 }
 
 void PmergeMe::measureTime()
 {
-        clock_t start, end;
+	clock_t start, end;
+	clock_t start2, end2;
 
-        // Measure time for std::vector
-        start = clock();
-        fordJohnson(_vector);
-        end = clock();
+	// Measure time for std::vector
+	start = clock();
+	fordJohnson(_vector);
+	end = clock();
 
-        // Measure time for std::list
-        start = clock();
-        fordJohnson(_list);
-        end = clock();
+	// Measure time for std::list
+	start2 = clock();
+	fordJohnson(_list);
+	end2 = clock();
 
-		// Display numbers after sorting them
-		std::string after = "After: ";
-		displayNumbers(after);
-		
-        std::cout << "Time to process with std::vector: " << double(end - start) / CLOCKS_PER_SEC << " seconds" << std::endl;
-        std::cout << "Time to process with std::list: " << double(end - start) / CLOCKS_PER_SEC << " seconds" << std::endl;
-    }
+	// Display numbers after sorting them
+	std::string after = "After: ";
+	displayNumbers(after);
 
+	std::cout << "Time to process with std::vector: " << double(end - start) / CLOCKS_PER_SEC << " seconds" << std::endl;
+	std::cout << "Time to process with std::list: " << double(end2 - start2) / CLOCKS_PER_SEC << " seconds" << std::endl;
+}
 
 /*
 ** --------------------------------- ACCESSOR ---------------------------------
 */
-
 
 /* ************************************************************************** */

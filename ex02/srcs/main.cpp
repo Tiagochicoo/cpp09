@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpereira <tpereira@42lisboa.com>           +#+  +:+       +#+        */
+/*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 16:49:12 by tpereira          #+#    #+#             */
-/*   Updated: 2023/11/19 22:48:13 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/11/25 18:27:36 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 // Here are a few container types you can consider testing with:
 
@@ -42,7 +41,7 @@ int main(int argc, char **argv)
 
 	PmergeMe pmerge(argv[1]);
 	std::string before = "Before: ";
-	pmerge.displayNumbers(before);
+	// pmerge.displayNumbers(before);
 	pmerge.measureTime();
 
 	return 0;
