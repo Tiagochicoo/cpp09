@@ -19,11 +19,14 @@
 #include <iostream>
 #include <vector>
 
-void insertionSortVector(std::vector<int>& sequence, size_t left, size_t right) {
-    for (size_t i = left + 1; i <= right; ++i) {
+void insertionSortVector(std::vector<int>& sequence, size_t left, size_t right)
+{
+    for (size_t i = left + 1; i <= right; ++i)
+    {
         int key = sequence[i];
         size_t j = i;
-        while (j > left && key < sequence[j - 1]) {
+        while (j > left && key < sequence[j - 1])
+        {
             sequence[j] = sequence[j - 1];
             --j;
         }
@@ -31,7 +34,8 @@ void insertionSortVector(std::vector<int>& sequence, size_t left, size_t right) 
     }
 }
 
-void mergeVector(std::vector<int>& sequence, size_t left, size_t middle, size_t right) {
+void mergeVector(std::vector<int>& sequence, size_t left, size_t middle, size_t right)
+{
     size_t n1 = middle - left + 1;
     size_t n2 = right - middle;
 
@@ -42,36 +46,46 @@ void mergeVector(std::vector<int>& sequence, size_t left, size_t middle, size_t 
     size_t j = 0;
     size_t k = left;
 
-    while (i < n1 && j < n2) {
-        if (L[i] <= R[j]) {
+    while (i < n1 && j < n2)
+    {
+        if (L[i] <= R[j])
+        {
             sequence[k] = L[i];
             ++i;
-        } else {
+        }
+        else
+        {
             sequence[k] = R[j];
             ++j;
         }
         ++k;
     }
 
-    while (i < n1) {
+    while (i < n1)
+    {
         sequence[k] = L[i];
         ++i;
         ++k;
     }
 
-    while (j < n2) {
+    while (j < n2)
+    {
         sequence[k] = R[j];
         ++j;
         ++k;
     }
 }
 
-void fordJohnsonVector(std::vector<int>& sequence, size_t left, size_t right) {
+void fordJohnsonVector(std::vector<int>& sequence, size_t left, size_t right)
+{
     const size_t threshold = 100;
 
-    if (right - left + 1 <= threshold) {
+    if (right - left + 1 <= threshold)
+    {
         insertionSortVector(sequence, left, right);
-    } else {
+    }
+    else
+    {
         size_t middle = left + (right - left) / 2;
 
         fordJohnsonVector(sequence, left, middle);
@@ -81,11 +95,14 @@ void fordJohnsonVector(std::vector<int>& sequence, size_t left, size_t right) {
     }
 }
 
-void insertionSortDeque(std::deque<int>& sequence, size_t left, size_t right) {
-    for (size_t i = left + 1; i <= right; ++i) {
+void insertionSortDeque(std::deque<int>& sequence, size_t left, size_t right)
+{
+    for (size_t i = left + 1; i <= right; ++i)
+    {
         int key = sequence[i];
         size_t j = i;
-        while (j > left && key < sequence[j - 1]) {
+        while (j > left && key < sequence[j - 1])
+        {
             sequence[j] = sequence[j - 1];
             --j;
         }
@@ -93,7 +110,8 @@ void insertionSortDeque(std::deque<int>& sequence, size_t left, size_t right) {
     }
 }
 
-void mergeDeque(std::deque<int>& sequence, size_t left, size_t middle, size_t right) {
+void mergeDeque(std::deque<int>& sequence, size_t left, size_t middle, size_t right)
+{
     size_t n1 = middle - left + 1;
     size_t n2 = right - middle;
 
@@ -104,36 +122,46 @@ void mergeDeque(std::deque<int>& sequence, size_t left, size_t middle, size_t ri
     size_t j = 0;
     size_t k = left;
 
-    while (i < n1 && j < n2) {
-        if (L[i] <= R[j]) {
+    while (i < n1 && j < n2)
+    {
+        if (L[i] <= R[j])
+        {
             sequence[k] = L[i];
             ++i;
-        } else {
+        }
+        else
+        {
             sequence[k] = R[j];
             ++j;
         }
         ++k;
     }
 
-    while (i < n1) {
+    while (i < n1)
+    {
         sequence[k] = L[i];
         ++i;
         ++k;
     }
 
-    while (j < n2) {
+    while (j < n2)
+    {
         sequence[k] = R[j];
         ++j;
         ++k;
     }
 }
 
-void fordJohnsonDeque(std::deque<int>& sequence, size_t left, size_t right) {
+void fordJohnsonDeque(std::deque<int>& sequence, size_t left, size_t right)
+{
     const size_t threshold = 100;
 
-    if (right - left + 1 <= threshold) {
+    if (right - left + 1 <= threshold)
+    {
         insertionSortDeque(sequence, left, right);
-    } else {
+    }
+    else
+    {
         size_t middle = left + (right - left) / 2;
 
         fordJohnsonDeque(sequence, left, middle);
@@ -143,14 +171,14 @@ void fordJohnsonDeque(std::deque<int>& sequence, size_t left, size_t right) {
     }
 }
 
-int main(int argc, char** argv) {
+void vectorAlgorithm(int argc, char **argv)
+{
     clock_t start, end;
-    clock_t start2, end2;
     int i = 0;
-
-    // Test with std::vector
+    // Time with std::vector
     std::vector<int> vectorSequence;
-    for (int i = 1; i < argc; ++i) {
+    for (int i = 1; i < argc; ++i)
+    {
         vectorSequence.push_back(std::atoi(argv[i]));
     }
 
@@ -168,7 +196,7 @@ int main(int argc, char** argv) {
     start = clock();
     fordJohnsonVector(vectorSequence, 0, vectorSequence.size() - 1);
     end = clock();
-    
+
     i = 0;
     std::cout << "After: ";
     for (std::vector<int>::iterator it = vectorSequence.begin(); it != vectorSequence.end(); ++it)
@@ -185,10 +213,17 @@ int main(int argc, char** argv) {
     double time_taken = (double)(end - start) / CLOCKS_PER_SEC;
     time_taken /= 0.000001;
     std::cout << std::fixed  << std::setprecision(5) << "Time to process a range of " << vectorSequence.size() << " elements with std::vector : " << time_taken << std::setprecision(10) << " us" << std::endl;
+}
+
+void dequeAlgorithm(int argc, char **argv)
+{
+    clock_t start, end;
+    int i = 0;
 
     // Test with std::deque
     std::deque<int> dequeSequence;
-    for (int i = 1; i < argc; ++i) {
+    for (int i = 1; i < argc; ++i) 
+    {
         dequeSequence.push_back(std::atoi(argv[i]));
     }
 
@@ -204,9 +239,9 @@ int main(int argc, char** argv) {
     	    std::cout << *it << " ";
 	}
     std::cout << std::endl;
-    start2 = clock();
+    start = clock();
     fordJohnsonDeque(dequeSequence, 0, dequeSequence.size() - 1);
-    end2 = clock();
+    end = clock();
 
     i = 0;
     std::cout << "After: ";
@@ -221,9 +256,45 @@ int main(int argc, char** argv) {
 	}
     std::cout << std::endl;
 
-    time_taken = (double)(end2 - start2) / CLOCKS_PER_SEC;
+    double time_taken = (double)(end - start) / CLOCKS_PER_SEC;
     time_taken /= 0.000001;
     std::cout << std::fixed  << std::setprecision(5) << "Time to process a range of " << dequeSequence.size() << " elements with std::deque : " << time_taken << " us" << std::endl;
+}
 
+bool findDuplicates(int argc, char** argv)
+{
+    std::vector<int> numbers;
+    int i = 0;
+    int count = 0;
+    for (int i = 1; i < argc; ++i)
+    {
+        numbers.push_back(std::atoi(argv[i]));
+    }
+
+    while (argv[i])
+    {
+        count = 0;
+        for (std::vector<int>::iterator it = numbers.begin(); it != numbers.end(); ++it)
+        {
+            if (*it == std::atoi(argv[i]))
+                count++;
+        }
+        if (count > 1)
+            return 1;
+        i++;
+    }
+    return 0;
+}
+
+int main(int argc, char** argv) 
+{
+    if (findDuplicates(argc, argv))
+    {
+        std::cout << "Error: Duplicate numbers found!" << std::endl;
+        return 1;
+    }
+    vectorAlgorithm(argc, argv);
+    dequeAlgorithm(argc, argv);    
+    
     return 0;
 }
