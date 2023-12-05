@@ -19,6 +19,15 @@
 #include <iostream>
 #include <vector>
 
+/* std::vector: This container provides contiguous memory storage,
+which can lead to better cache locality. It's suitable for scenarios
+where you often iterate over the elements sequentially.
+
+std::deque: This container is a double-ended queue, providing fast insertion
+and deletion at both ends. It consists of multiple fixed-size blocks of memory,
+which can offer better cache locality than std::list but may not be as
+contiguous as std::vector. */
+
 void insertionSortVector(std::vector<int>& sequence, size_t left, size_t right)
 {
     for (size_t i = left + 1; i <= right; ++i)
@@ -175,7 +184,7 @@ void vectorAlgorithm(int argc, char **argv)
 {
     clock_t start, end;
     int i = 0;
-    // Time with std::vector
+
     std::vector<int> vectorSequence;
     for (int i = 1; i < argc; ++i)
     {
@@ -220,7 +229,6 @@ void dequeAlgorithm(int argc, char **argv)
     clock_t start, end;
     int i = 0;
 
-    // Test with std::deque
     std::deque<int> dequeSequence;
     for (int i = 1; i < argc; ++i) 
     {
@@ -293,8 +301,16 @@ int main(int argc, char** argv)
         std::cout << "Error: Duplicate numbers found!" << std::endl;
         return 1;
     }
+    for (int i = 0; i < argc; i++)
+    {
+        if (std::atoi(argv[i]) < 0)
+        {
+            std::cout << "Error" << std::endl;
+            return 1;
+        }
+    }
     vectorAlgorithm(argc, argv);
-    dequeAlgorithm(argc, argv);    
+    dequeAlgorithm(argc, argv);
     
     return 0;
 }
