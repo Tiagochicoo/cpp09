@@ -39,11 +39,10 @@ RPN::~RPN()
 
 RPN &RPN::operator=(RPN const &rhs)
 {
-	(void)rhs;
-	// if ( this != &rhs )
-	//{
-	// this->_value = rhs.getValue();
-	//}
+	if ( this != &rhs )
+	{
+	this->_numbers = rhs.getNumbers();
+	}
 	return *this;
 }
 

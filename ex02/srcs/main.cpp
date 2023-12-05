@@ -1,3 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/19 16:49:12 by tpereira          #+#    #+#             */
+/*   Updated: 2023/11/25 19:42:30 by tpereira         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include <iostream>
+#include <iomanip>
 #include <algorithm>
 #include <cstdlib>
 #include <ctime>
@@ -5,7 +19,6 @@
 #include <iostream>
 #include <vector>
 
-// Optimized insertion sort for std::vector
 void insertionSortVector(std::vector<int>& sequence, size_t left, size_t right) {
     for (size_t i = left + 1; i <= right; ++i) {
         int key = sequence[i];
@@ -18,7 +31,6 @@ void insertionSortVector(std::vector<int>& sequence, size_t left, size_t right) 
     }
 }
 
-// Optimized merge for std::vector
 void mergeVector(std::vector<int>& sequence, size_t left, size_t middle, size_t right) {
     size_t n1 = middle - left + 1;
     size_t n2 = right - middle;
@@ -54,7 +66,6 @@ void mergeVector(std::vector<int>& sequence, size_t left, size_t middle, size_t 
     }
 }
 
-// Optimized Ford-Johnson for std::vector
 void fordJohnsonVector(std::vector<int>& sequence, size_t left, size_t right) {
     const size_t threshold = 100;
 
@@ -70,7 +81,6 @@ void fordJohnsonVector(std::vector<int>& sequence, size_t left, size_t right) {
     }
 }
 
-// Optimized insertion sort for std::deque
 void insertionSortDeque(std::deque<int>& sequence, size_t left, size_t right) {
     for (size_t i = left + 1; i <= right; ++i) {
         int key = sequence[i];
@@ -83,7 +93,6 @@ void insertionSortDeque(std::deque<int>& sequence, size_t left, size_t right) {
     }
 }
 
-// Optimized merge for std::deque
 void mergeDeque(std::deque<int>& sequence, size_t left, size_t middle, size_t right) {
     size_t n1 = middle - left + 1;
     size_t n2 = right - middle;
@@ -119,7 +128,6 @@ void mergeDeque(std::deque<int>& sequence, size_t left, size_t middle, size_t ri
     }
 }
 
-// Optimized Ford-Johnson for std::deque
 void fordJohnsonDeque(std::deque<int>& sequence, size_t left, size_t right) {
     const size_t threshold = 100;
 
@@ -138,6 +146,7 @@ void fordJohnsonDeque(std::deque<int>& sequence, size_t left, size_t right) {
 int main(int argc, char** argv) {
     clock_t start, end;
     clock_t start2, end2;
+    int i = 0;
 
     // Test with std::vector
     std::vector<int> vectorSequence;
@@ -145,13 +154,37 @@ int main(int argc, char** argv) {
         vectorSequence.push_back(std::atoi(argv[i]));
     }
 
-    std::cout << "Original Vector: ";
+    std::cout << "Before: ";
+    for (std::vector<int>::iterator it = vectorSequence.begin(); it != vectorSequence.end(); ++it)
+	{
+    	if (i++ == 10)
+            std::cout << "[...]";
+        else if (i > 10)
+            break;
+        else
+    	    std::cout << *it << " ";
+	}
     std::cout << std::endl;
     start = clock();
     fordJohnsonVector(vectorSequence, 0, vectorSequence.size() - 1);
     end = clock();
-    std::cout << "Sorted Vector in " << (double)(end - start) / CLOCKS_PER_SEC << " seconds" << std::endl;
+    
+    i = 0;
+    std::cout << "After: ";
+    for (std::vector<int>::iterator it = vectorSequence.begin(); it != vectorSequence.end(); ++it)
+	{
+        if (i++ == 10)
+            std::cout << "[...]";
+        else if (i > 10)
+            break;
+        else
+    	    std::cout << *it << " ";
+    }
     std::cout << std::endl;
+
+    double time_taken = (double)(end - start) / CLOCKS_PER_SEC;
+    time_taken /= 0.000001;
+    std::cout << std::fixed  << std::setprecision(5) << "Time to process a range of " << vectorSequence.size() << " elements with std::vector : " << time_taken << std::setprecision(10) << " us" << std::endl;
 
     // Test with std::deque
     std::deque<int> dequeSequence;
@@ -159,14 +192,38 @@ int main(int argc, char** argv) {
         dequeSequence.push_back(std::atoi(argv[i]));
     }
 
-    std::cout << "Original Deque: ";
+    i = 0;
+    std::cout << "Before: ";
+    for (std::deque<int>::iterator it = dequeSequence.begin(); it != dequeSequence.end(); ++it)
+	{
+    	if (i++ == 10)
+            std::cout << "[...]";
+        else if (i > 10)
+            break;
+        else
+    	    std::cout << *it << " ";
+	}
     std::cout << std::endl;
     start2 = clock();
     fordJohnsonDeque(dequeSequence, 0, dequeSequence.size() - 1);
     end2 = clock();
 
-    std::cout << "Sorted Deque in " << (double)(end2 - start2) / CLOCKS_PER_SEC << " seconds" << std::endl;
+    i = 0;
+    std::cout << "After: ";
+    for (std::deque<int>::iterator it = dequeSequence.begin(); it != dequeSequence.end(); ++it)
+	{
+        if (i++ == 10)
+            std::cout << "[...]";
+        else if (i > 10)
+            break;
+        else
+    	    std::cout << *it << " ";
+	}
     std::cout << std::endl;
+
+    time_taken = (double)(end2 - start2) / CLOCKS_PER_SEC;
+    time_taken /= 0.000001;
+    std::cout << std::fixed  << std::setprecision(5) << "Time to process a range of " << dequeSequence.size() << " elements with std::deque : " << time_taken << " us" << std::endl;
 
     return 0;
 }
